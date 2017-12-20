@@ -3,7 +3,7 @@
 These are my personal dotfiles.
 
 These dotfiles are best used with zsh, [oh-my-zsh][oh-my-zsh], and the
-[solarized][solarized] colorscheme.
+[base16][base16] variant of the [solarized][solarized] colorscheme.
 The configuration has powerline-based fonts status bars for vim and tmux, and
 uses a custom zsh theme similar to agnoster.
 Thus you'll need to patch to a font that supports powerline.
@@ -48,10 +48,12 @@ Next you will want to change the fonts in your iTerm profile.
 Go to the `Text` tab in your current profile and pick an appropriate font.
 
 #### Solarized on iTerm
-The Solarized colors for iTerm can be found in its
-[official repository][solarized-repo].
-Import [`Solarized Dark.itermcolors`][itermcolors] as a colorscheme for iTerm.
-In the `Colors` section of your iTerm profile, use the `Solarized Dark` preset.
+The Base16 Solarized colors for iTerm can be found in its
+[this repository][base16-iterm2].
+Import [`base16-solarized-dark.itermcolors`][itermcolors] as a colorscheme for
+iTerm.
+In the `Colors` section of your iTerm profile, use the `base16-solarized-dark`
+preset.
 To get the directory colors to work, you'll need to uncheck the `Draw bold text
 in bright colors` setting.
 
@@ -93,8 +95,7 @@ wget https://raw.githubusercontent.com/powerline/powerline/master/font/10-powerl
 #### Solarized on Ubuntu Terminal
 To get Solarized on the Ubuntu Terminal, you will want to create a new profile.
 Then you will follow the instructions in
-[gnome-terminal-colors-solarized][gnome-terminal-colors-solarized] to set the
-color scheme.
+[base16-gnome-terminal][base16-gnome-terminal] to set the color scheme.
 
 Start by creating a new profile on the terminal emulator.
 
@@ -109,9 +110,9 @@ Finally clone the
 follow its installation instructions.
 
 ```bash
-git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
-cd gnome-terminal-colors-solarized
-./set_dark.sh
+git clone https://github.com/aaron-williamson/base16-gnome-terminal.git
+cd base16-gnome-terminal
+source ./color-scripts/base16-solarized-dark.sh
 ```
 
 ### Other optional tools
@@ -173,6 +174,11 @@ rm -rf ~/.oh-my-zsh # optionally remove oh-my-zsh
 chsh -s `which bash` # optionally change shell back to bash
 ```
 
+[base16]: <https://github.com/chriskempson/base16>
+[base16-iterm2]: <https://github.com/martinlindhe/base16-iterm2>
+[itermcolors]: <https://github.com/martinlindhe/base16-iterm2/blob/master/itermcolors/base16-solarized-dark.itermcolors>
+[base16-gnome-terminal]: <https://github.com/aaron-williamson/base16-gnome-terminal>
+
 [solarized]: <http://ethanschoonover.com/solarized>
 [homebrew]: <http://brew.sh/>
 [vim8]: <https://github.com/vim/vim/blob/753289f9bf71c0528f00d803a39d017184640e9d/runtime/doc/version8.txt>
@@ -182,10 +188,8 @@ chsh -s `which bash` # optionally change shell back to bash
 [powerline-fonts]: <https://github.com/powerline/fonts>
 [gnome-terminal-colors-solarized]: <https://github.com/Anthony25/gnome-terminal-colors-solarized>
 [powerline]: <https://github.com/powerline/powerline>
-[solarized-repo]: <https://github.com/altercation/solarized>
 [ag]: <https://github.com/ggreer/the_silver_searcher>
 [fzf]: <https://github.com/junegunn/fzf>
 
-[itermcolors]: <https://raw.githubusercontent.com/altercation/solarized/e40cd4130e2a82f9b03ada1ca378b7701b1a9110/iterm2-colors-solarized/Solarized%20Dark.itermcolors>
 [symbols-conf]: <https://raw.githubusercontent.com/powerline/powerline/5a24eceae9b61b89b34794fea18b8c51da823a6c/font/10-powerline-symbols.conf>
 [symbols-otf]: <https://raw.githubusercontent.com/powerline/powerline/5a24eceae9b61b89b34794fea18b8c51da823a6c/font/PowerlineSymbols.otf>
