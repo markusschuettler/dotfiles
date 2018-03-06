@@ -54,7 +54,6 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   " Color scheme
   syntax enable
   set background=dark
-  "colorscheme solarized
   colorscheme base16-solarized-dark
 endif
 
