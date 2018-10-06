@@ -48,7 +48,6 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitconfig.static'
   'git/gitignore'
 
-  'shell/dircolors.256dark'
   'shell/gdbinit'
   'shell/tmux.conf'
   'shell/zshrc'
@@ -107,6 +106,28 @@ answer_is_yes() {
     || return 1
 }
 
+symlink_files() {
+  if [[ $BUILD ]]; then
+    if [ ! -e "$2" ]; then
+      execute "ln -fs $1 $2" "$2 → $1"
+    elif [ "$(readlink "$2")" == "$1" ]; then
+      print_success "$2 → $1"
+    else
+      ask_for_confirmation "'$2' already exists, do you want to overwrite it?"
+      if answer_is_yes; then
+        rm -rf "$2"
+        execute "ln -fs $1 $2" "$2 → $1"
+      else
+        print_error "$2 → $1"
+      fi
+    fi
+  else
+    if [ "$(readlink "$2")" == "$1" ]; then
+      execute "unlink $2" "$2"
+    fi
+  fi
+}
+
 install_zsh() {
   # Test to see if zshell is installed.
   if [ -z $(which zsh) ]; then
@@ -139,29 +160,13 @@ for i in ${FILES_TO_SYMLINK[@]}; do
   sourceFile="$(pwd)/$i"
   targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
 
-  if [[ $BUILD ]]; then
-    if [ ! -e "$targetFile" ]; then
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-    elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-      print_success "$targetFile → $sourceFile"
-    else
-      ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-      if answer_is_yes; then
-        rm -rf "$targetFile"
-        execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-      else
-        print_error "$targetFile → $sourceFile"
-      fi
-    fi
-  else
-    if [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-      execute "unlink $targetFile" "$targetFile"
-    fi
-  fi
+  symlink_files $sourceFile $targetFile
 done
 
-sourceFile="$(pwd)/themes/pickles.zsh-theme"
-targetFile="$HOME/.oh-my-zsh/custom/pickles.zsh-theme"
+# Symlink the dircolors files.
+sourceFile="$(pwd)/shell/dircolors.256dark"
+symlink_files $sourceFile "$HOME/.dircolors"
+symlink_files $sourceFile "$HOME/.dir_colors"
 
 if [[ $BUILD ]]; then
   # Prompt to switch to zsh and oh-my-zsh if not active on terminal.
@@ -171,13 +176,14 @@ if [[ $BUILD ]]; then
       install_zsh
     fi
   fi
+fi
 
-  # Link custom zsh theme.
-  execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+# Link/unlink custom zsh theme.
+sourceFile="$(pwd)/themes/pickles.zsh-theme"
+targetFile="$HOME/.oh-my-zsh/custom/pickles.zsh-theme"
+symlink_files $sourceFile $targetFile
 
+if [[ $BUILD ]]; then
   # Link static gitignore.
   git config --global include.path ~/.gitconfig.static
-else
-  # Unlink custom zsh theme.
-  execute "unlink $targetFile" "$targetFile"
 fi
