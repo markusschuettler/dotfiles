@@ -234,3 +234,9 @@ if [[ $BUILD ]]; then
   # Link gitconfig.
   git config --global include.path ~/.main.gitconfig
 fi
+
+
+if [ ! -d ~/.asdf ]
+then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+fi
