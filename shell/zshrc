@@ -31,6 +31,9 @@ plugins=(
   git-auto-fetch
   fd
   ripgrep
+  npm
+  yarn
+  aws
 )
 
 # Returns whether the given command is executable or aliased.
@@ -195,3 +198,11 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+export DISPLAY=$(ip route show | sed -n -e 's/default via \([0-9\.]*\) .*/\1/p'):0.0; export LIBGL_ALWAYS_INDIRECT=1
+alias awsume=". awsume"
+alias awstoken="awstoken --region=eu-west-1 --timeout=240"
+alias chrome='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
