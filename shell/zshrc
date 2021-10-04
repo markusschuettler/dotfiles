@@ -16,7 +16,7 @@ ZSH_THEME='powerlevel10k/powerlevel10k'
 # https://stackoverflow.com/a/5203740/3344451
 _p10k_incompatible_emulators=(
   Apple_Terminal
-  vscode
+  # vscode
 )
 if [[ -n "${_p10k_incompatible_emulators[(r)$TERM_PROGRAM]}" ]]; then
   ZSH_THEME='robbyrussell'
@@ -205,12 +205,3 @@ alias awsume=". awsume"
 alias awstoken="awstoken --region=eu-west-1 --timeout=240"
 alias chrome='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
 alias agi='sudo apt-get install'
-
-if [ -e ~/.vim/plugged/fzf ]; then
-  _append_to_path ~/.vim/plugged/fzf/bin
-  # Source fzf key bindings and auto-completion.
-  source ~/.vim/plugged/fzf/shell/key-bindings.zsh
-  source ~/.vim/plugged/fzf/shell/completion.zsh
-fi
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-
